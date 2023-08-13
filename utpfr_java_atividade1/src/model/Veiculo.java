@@ -1,5 +1,7 @@
 package model;
 
+import controller.VelocException;
+
 public abstract class Veiculo {
     
     private String placa;
@@ -10,7 +12,7 @@ public abstract class Veiculo {
     private int qtdRodas;
     private Motor motor;
     
-    abstract float calculaVel(float velMaxima);
+    abstract float calculaVel(float velMaxima) throws VelocException;
     
     protected Veiculo() {
         super();

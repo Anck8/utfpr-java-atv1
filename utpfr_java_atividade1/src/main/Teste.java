@@ -5,6 +5,8 @@ import java.util.List;
 
 import controller.Impressao;
 import controller.Leitura;
+import controller.VeicExistException;
+import controller.VelocException;
 import model.Carga;
 import model.Passeio;
 import model.Veiculo;
@@ -15,7 +17,8 @@ public class Teste {
     static List<Carga> carrosCarga = new ArrayList<>();
     static Leitura leitura = new Leitura();
     static String placa;
-    static final String VEICULO_CADASTRADO = "\n==========[Veículo já cadastrado]==========\n";
+    static final String VEICULO_CADASTRADO = "\n===[Já existe um veículo com esta placa]===\n";
+    static final String VELOCIDADE_INCORRETA = "\n===[A velocidade máxima está fora dos limites Brasileiros]===\n";
 
     public static void main(String[] args) {
          Impressao.imprimeMenu();
@@ -54,68 +57,102 @@ public class Teste {
         }
     }
 
-    public static void cadastrarPasseio() {
-        System.out.println("[Cadastro>Passeio]");
-        Passeio carro = new Passeio();
-        carro.setPlaca(leitura.entDados("   Placa: "));
-        if (veiculoJaCadastrado(carro)) {
-            return;
-        }
-        carro.setMarca(leitura.entDados("    Marca: "));
-        carro.setModelo(leitura.entDados("    Modelo: "));
-        carro.setCor(leitura.entDados("    Cor: "));
-        carro.setVelMaxima(Float.parseFloat(leitura.entDados("    Vel. Maxima: ").replaceAll("\\D+", "")));
-        carro.setQtdRodas(Integer.parseInt(leitura.entDados("    Qtd. Rodas: ").replaceAll("\\D+", "")));
-        carro.getMotor().setQtdPist(Integer.parseInt(leitura.entDados("    [Motor] Qtd. Pist: ").replaceAll("\\D+", "")));
-        carro.getMotor().setPotencia(Integer.parseInt(leitura.entDados("    [Motor] Potência: ").replaceAll("\\D+", "")));
-        carro.setQtdPassageiros(Integer.parseInt(leitura.entDados("    Qtd. Passageiros: ").replaceAll("\\D+", "")));
-        carrosPasseio.add(carro);
-        if(leitura.entDados("    Deseja cadastrar mais um veículo [Passeio]?: ").equalsIgnoreCase("nao")) {
-            System.out.println("\n------------------------------------------\n");
-        } else {
-            cadastrarPasseio();
-        }
-    }
+	public static void cadastrarPasseio() {
+		System.out.println("[Cadastro>Passeio]");
+		Passeio carro = new Passeio();
+		carro.setPlaca(leitura.entDados("    Placa: "));
+		validaVeiculoCadastrado(carro);
+		
+		carro.setMarca(leitura.entDados("    Marca: "));
+		carro.setModelo(leitura.entDados("    Modelo: "));
+		carro.setCor(leitura.entDados("    Cor: "));
+		carro.setVelMaxima(Float.parseFloat(leitura.entDados("    Vel. Maxima: ").replaceAll("\\D+", "")));
+		validaVeiculoVelMaxima(carro);
+		
+		carro.setQtdRodas(Integer.parseInt(leitura.entDados("    Qtd. Rodas: ").replaceAll("\\D+", "")));
+		carro.getMotor().setQtdPist(Integer.parseInt(leitura.entDados("    [Motor] Qtd. Pist: ").replaceAll("\\D+", "")));
+		carro.getMotor().setPotencia(Integer.parseInt(leitura.entDados("    [Motor] Potência: ").replaceAll("\\D+", "")));
+		carro.setQtdPassageiros(Integer.parseInt(leitura.entDados("    Qtd. Passageiros: ").replaceAll("\\D+", "")));
+
+		carrosPasseio.add(carro);
+		String novoCadastro = leitura.entDados("    Deseja cadastrar mais um veículo [Passeio]?: ");
+		switch (novoCadastro.toUpperCase()) {
+		case "NAO":
+			System.out.println("\n------------------------------------------\n");
+			break;
+		case "SIM":
+			cadastrarPasseio();
+			break;
+		default:
+			break;
+		}
+	}
     
-    public static void cadastrarCarga() {
+	public static void cadastrarCarga() {
         System.out.println("[Cadastro>Carga]");
         Carga carro = new Carga();
-        carro.setPlaca(leitura.entDados("    Placa: "));
-        if (veiculoJaCadastrado(carro)) {
-            return;
-        }
+    	carro.setPlaca(leitura.entDados("    Placa: "));
+    	validaVeiculoCadastrado(carro);
+    	
         carro.setMarca(leitura.entDados("    Marca: "));
         carro.setModelo(leitura.entDados("    Modelo: "));
         carro.setCor(leitura.entDados("    Cor: "));
         carro.setVelMaxima(Float.parseFloat(leitura.entDados("    Vel. Maxima: ").replaceAll("\\D+", "")));
+        validaVeiculoVelMaxima(carro);
+        
         carro.setQtdRodas(Integer.parseInt(leitura.entDados("    Qtd. Rodas: ").replaceAll("\\D+", "")));
         carro.getMotor().setQtdPist(Integer.parseInt(leitura.entDados("    [Motor] Qtd. Pist: ").replaceAll("\\D+", "")));
         carro.getMotor().setPotencia(Integer.parseInt(leitura.entDados("    [Motor] Potência: ").replaceAll("\\D+", "")));
         carro.setCargaMax(Integer.parseInt(leitura.entDados("    Carga Máxima: ").replaceAll("\\D+", "")));
         carro.setTara(Integer.parseInt(leitura.entDados("    Tara: ").replaceAll("\\D+", "")));
         carrosCarga.add(carro);
-        if(leitura.entDados("    Deseja cadastrar mais um veículo [Carga]?: ").equalsIgnoreCase("nao")) {
-            System.out.println("\n------------------------------------------\n");
-
-        } else {
-            cadastrarCarga();
-        }
+        String novoCadastro = leitura.entDados("    Deseja cadastrar mais um veículo [Carga]?: ");
+		switch (novoCadastro.toUpperCase()) {
+			case "NAO":
+				System.out.println("\n------------------------------------------\n");
+				break;
+			case "SIM":
+				cadastrarCarga();
+				break;
+			default:
+				break;
+		}
     }
 
-    public static boolean veiculoJaCadastrado(Veiculo carro) {
-        Veiculo carroCadastrado = carrosPasseio.stream().filter(cp -> cp.getPlaca().equals(carro.getPlaca())).findFirst()
-                        .orElse(null);
-        if (carroCadastrado != null) {
-            System.out.println(VEICULO_CADASTRADO);
-            if (carroCadastrado instanceof Passeio) {
-                Impressao.imprimeCarroPasseioPorPlaca(carrosPasseio, carro.getPlaca());
-            } else {
-                Impressao.imprimeCarroCargaPorPlaca(carrosCarga, carro.getPlaca());
-            }
-            return true;
-        }
-        return false;
-    }
+	public static void validaVeiculoCadastrado(Veiculo carro) {
+		Veiculo carroCadastrado = carrosPasseio.stream().filter(cp -> cp.getPlaca().equals(carro.getPlaca()))
+				.findFirst().orElse(null);
+		if (carroCadastrado != null) {
+			try {
+				if (carroCadastrado instanceof Passeio) {
+					Impressao.imprimeCarroPasseioPorPlaca(carrosPasseio, carro.getPlaca());
+					throw new VeicExistException(VEICULO_CADASTRADO);
+				} else {
+					Impressao.imprimeCarroCargaPorPlaca(carrosCarga, carro.getPlaca());
+					throw new VeicExistException(VEICULO_CADASTRADO);
+				}
+			} catch (VeicExistException vei) {
+				System.out.println(vei.getMessage()); 
+			}
+		}
+	}
+	
+	public static void validaVeiculoVelMaxima(Veiculo carro) {
+		Float velMaxima = carro.getVelMaxima();
+		try {
+			if (80F > velMaxima || velMaxima < 110) {
+				throw new VelocException(VELOCIDADE_INCORRETA);
+			}
+		} catch (VelocException vel) {
+			if (carro instanceof Passeio) {
+				carro.setVelMaxima(100F);
+			}
+			else if (carro instanceof Carga) {
+				carro.setVelMaxima(90F);
+			}
+			System.out.println(vel.getMessage());
+		}
+	}
 
     public static void Testar() {
         List<Passeio> veiculosPasseio = new ArrayList();

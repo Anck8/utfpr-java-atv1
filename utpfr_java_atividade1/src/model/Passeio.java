@@ -2,7 +2,7 @@ package model;
 
 import controller.Calcular;
 
-public class Passeio extends Veiculo implements Calcular {
+public final class Passeio extends Veiculo implements Calcular {
 
     private int qtdPassageiros;
     
