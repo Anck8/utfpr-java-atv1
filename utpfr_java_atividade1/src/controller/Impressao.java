@@ -80,6 +80,8 @@ public class Impressao {
                             + "\n * Qtd. Pistões:   " + vCarga.getMotor().getQtdPist());
         }
         System.out.println("Cálculo interface: " + vCarga.calcular());
+        System.out.println("------------------------------------------\n");
+
     }
     
     public static void imprimePasseio(Passeio vPasseio) {
@@ -102,6 +104,8 @@ public class Impressao {
                             + "\n * Qtd. Pistões:   " + vPasseio.getMotor().getQtdPist());
         }
         System.out.println("Cálculo interface: " + vPasseio.calcular());
+        System.out.println("------------------------------------------\n");
+
     }
     
     public static void erroNull() {

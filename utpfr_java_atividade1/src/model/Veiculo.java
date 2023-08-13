@@ -72,7 +72,7 @@ public abstract class Veiculo {
         return velMaxima;
     }
     public final void setVelMaxima(Float velMaxima) throws VelocException {
-    	if (80F > velMaxima || velMaxima < 110) {
+    	if (velMaxima < 80F || velMaxima > 110) {
 			throw new VelocException("\n===[A velocidade máxima está fora dos limites Brasileiros]===\n");
 		}
         this.velMaxima = velMaxima;
