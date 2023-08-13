@@ -24,7 +24,7 @@ public class Impressao {
             return;
         }
         Optional<Passeio> passeio = carros.stream().filter(c -> c.getPlaca().equals(placa)).findAny();
-        passeio.ifPresentOrElse(Impressao::imprimePasseio, () -> System.out.println("\n=========[Nenhum carro encontrado]=========\n"));
+        passeio.ifPresentOrElse(Impressao::imprimePasseio, () -> System.out.println("\n========[Nenhum veículo encontrado]========\n"));
     }
 
     public static void imprimeCarrosCarga(List<Carga> carros) {
