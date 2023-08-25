@@ -3,4 +3,5 @@
  *
  */
 module utpfr_java_1 {
+	requires java.desktop;
 }
