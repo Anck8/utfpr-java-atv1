@@ -7,24 +7,26 @@ import controller.VelocException;
 import model.BDVeiculos;
 import model.Carga;
 import model.Passeio;
+import view.FrameMenu;
 
 public class Teste {
 
-	static BDVeiculos carros = new BDVeiculos();
+	static BDVeiculos carros = BDVeiculos.getBDVeiculosSingle();
     static Leitura leitura = new Leitura();
     static String placa;
 
-    public static void main(String[] args) {
-		carros.addCarga(new Carga("BCD 234", "Ford", "Transit", "Branca", 190.00F, 4, 6, 127, 1000, 500));
+    public static void main(String[] args) throws VeicExistException {
+        FrameMenu menu = new FrameMenu();
+        menu.setVisible(true);
+        carros.addCarga(new Carga("BCD 234", "Ford", "Transit", "Branca", 190.00F, 4, 6, 127, 1000, 500));
         carros.addCarga(new Carga("CDT 246", "Ford", "Transit", "Preta", 210.00F, 4, 8, 152, 1150, 510));
         carros.addCarga(new Carga("CFT 910", "Ford", "Ranger", "Amarela", 200.00F, 4, 12, 230, 800, 300));
         carros.addCarga(new Carga("BGA 398", "Fiat", "Doblo", "Azul", 210.00F, 4, 5, 183, 1100, 550));
         carros.addCarga(new Carga("HAY 099", "RAPsev", "L2e-U", "Branca", 90.00F, 3, 0, 97, 400, 110));
-         Impressao.imprimeMenu();
-         controlaMenu();
+        
     }
 
-    public static void controlaMenu() {
+    public static void controlaMenu() throws VeicExistException {
         String seletor = leitura.entDados("");
         while (!seletor.equals("9")) {
             switch (seletor) {
@@ -64,7 +66,7 @@ public class Teste {
         }
     }
 
-	public static void cadastrarPasseio() {
+	public static void cadastrarPasseio() throws VeicExistException {
 		System.out.println("[Cadastro>Passeio]");
 		Passeio carro = new Passeio();
 		try {
@@ -85,8 +87,8 @@ public class Teste {
 			carro.getMotor().setQtdPist(Integer.parseInt(leitura.entDados("    [Motor] Qtd. Pist: ").replaceAll("\\D+", "")));
 			carro.getMotor().setPotencia(Integer.parseInt(leitura.entDados("    [Motor] Potência: ").replaceAll("\\D+", "")));
 			carro.setQtdPassageiros(Integer.parseInt(leitura.entDados("    Qtd. Passageiros: ").replaceAll("\\D+", "")));
+			carros.addPasseio(carro);
 		}
-		carros.addPasseio(carro);
 		
 		String novoCadastro = leitura.entDados("    Deseja cadastrar mais um veículo [Passeio]?: ");
 		switch (novoCadastro.toUpperCase()) {
@@ -102,7 +104,7 @@ public class Teste {
 		}
 	}
     
-	public static void cadastrarCarga() {
+	public static void cadastrarCarga() throws VeicExistException {
 		System.out.println("[Cadastro>Carga]");
 		Carga carro = new Carga();
 		try {
@@ -123,8 +125,8 @@ public class Teste {
 			carro.getMotor().setPotencia(Integer.parseInt(leitura.entDados("    [Motor] Potência: ").replaceAll("\\D+", "")));
 			carro.setCargaMax(Integer.parseInt(leitura.entDados("    Carga Máxima: ").replaceAll("\\D+", "")));
 			carro.setTara(Integer.parseInt(leitura.entDados("    Tara: ").replaceAll("\\D+", "")));
+			carros.addCarga(carro);
 		}
-		carros.addCarga(carro);
 		
 		String novoCadastro = leitura.entDados("    Deseja cadastrar mais um veículo [Carga]?: ");
 		switch (novoCadastro.toUpperCase()) {
