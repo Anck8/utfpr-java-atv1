@@ -8,7 +8,6 @@ import controller.VeicExistException;
 
 public final class BDVeiculos {
 
-	static final String VEICULO_CADASTRADO = "\nJá existe um veículo com esta placa!\n";
 	private List<Passeio> listaPasseio = new ArrayList<Passeio>();
 	private List<Carga> listaCarga = new ArrayList<Carga>();
 	static BDVeiculos BDVeiculosSingle;
@@ -63,15 +62,16 @@ public final class BDVeiculos {
 			Veiculo carroCad = BDVeiculosSingle.listaPasseio.stream()
 					.filter(cp -> cp.getPlaca().equals(carro.getPlaca())).findAny().orElse(null);
 			if (carroCad != null) {
+				//substituir por preencher a tela de cadastro
 				Impressao.imprimeCarroPasseioPorPlaca(BDVeiculosSingle.listaPasseio, carro.getPlaca());
-				throw new VeicExistException(VEICULO_CADASTRADO);
+				throw new VeicExistException();
 			}
 		} else if (!BDVeiculosSingle.listaCarga.isEmpty()) {
 			Veiculo carroCad = BDVeiculosSingle.listaCarga.stream().filter(cp -> cp.getPlaca().equals(carro.getPlaca()))
 					.findAny().orElse(null);
 			if (carroCad != null) {
 				Impressao.imprimeCarroCargaPorPlaca(BDVeiculosSingle.listaCarga, carro.getPlaca());
-				throw new VeicExistException(VEICULO_CADASTRADO);
+				throw new VeicExistException();
 			}
 		}
 	}

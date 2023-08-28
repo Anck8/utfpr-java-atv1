@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import javax.swing.JInternalFrame;
 
 public class Menu extends JFrame {
 
@@ -51,8 +52,8 @@ public class Menu extends JFrame {
 		
 		contentPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		btnCarga.setBounds(226, 137, 212, 70);
-		btnPasseio.setBounds(12, 137, 212, 70);
+		btnCarga.setBounds(226, 150, 212, 70);
+		btnPasseio.setBounds(12, 150, 212, 70);
 		btnSair.setBounds(381, 232, 57, 27);
 		
 		contentPane.setLayout(null);
@@ -60,13 +61,23 @@ public class Menu extends JFrame {
 		contentPane.add(btnPasseio);
 		contentPane.add(btnSair);
 		
-		JPanel panelImagePasseio = new JPanel();
-		panelImagePasseio.setBounds(12, 0, 212, 125);
-		contentPane.add(panelImagePasseio);
+		JLabel lblIconeCarga = new JLabel("");
+		try {
+			lblIconeCarga.setBounds(226, 13, 212, 125);
+			lblIconeCarga.setIcon(new ImageIcon(Menu.class.getResource("/resources/Carga.jpg")));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		contentPane.add(lblIconeCarga);
 		
-		JPanel panelImageCarga = new JPanel();
-		panelImageCarga.setBounds(226, 0, 212, 125);
-		contentPane.add(panelImageCarga);
+		JLabel lblIconePasseio = new JLabel("");
+		try {
+			lblIconePasseio.setBounds(12, 13, 212, 125);
+			lblIconePasseio.setIcon(new ImageIcon(Menu.class.getResource("/resources/Passeio.jpg")));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		contentPane.add(lblIconePasseio);
 		
 		
 		btnCarga.addActionListener(new ActionListener() {
@@ -84,10 +95,7 @@ public class Menu extends JFrame {
 				btnSairAction(arg0);
 			}
 		});
-		
-		
 		setLocationRelativeTo(null);
-		
 	}
 
 	private void setImagePasseio(JPanel panelImagePasseio) {

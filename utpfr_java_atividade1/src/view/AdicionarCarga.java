@@ -30,10 +30,10 @@ public class AdicionarCarga extends JFrame {
 	private JTextField textFieldQtdPistoes;
 	private JTextField textFieldPotencia;
 	private JTextField textFieldTara;
+	private JTextField textFieldCargaMax;
 	private JButton btnNovo;
 	
 	static AdicionarCarga adicionarCargaSingle;
-	private JTextField textFieldCargaMax;
 	
 	public static AdicionarCarga getAdicionarCargaSingle() {
 		if (adicionarCargaSingle == null) {
@@ -155,10 +155,16 @@ public class AdicionarCarga extends JFrame {
 		contentPane.add(textFieldTara);
 		textFieldTara.setColumns(10);
 		
+		textFieldCargaMax = new JTextField();
+		textFieldCargaMax.setBounds(140, 28, 298, 21);
+		contentPane.add(textFieldCargaMax);
+		textFieldCargaMax.setColumns(10);
+		
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnSairAction(arg0);
+				limpar();
+				dispose();
 			}
 		});
 		btnSair.setBounds(348, 282, 90, 27);
@@ -178,7 +184,7 @@ public class AdicionarCarga extends JFrame {
 		JButton btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnLimparAction(arg0);
+				limpar();
 			}
 		});
 		btnLimpar.setBounds(129, 282, 105, 27);
@@ -198,20 +204,12 @@ public class AdicionarCarga extends JFrame {
 		lblCargaMx.setBounds(12, 30, 110, 17);
 		contentPane.add(lblCargaMx);
 		
-		textFieldCargaMax = new JTextField();
-		textFieldCargaMax.setBounds(140, 28, 298, 21);
-		contentPane.add(textFieldCargaMax);
-		textFieldCargaMax.setColumns(10);
-		
 		setLocationRelativeTo(null);
 	}
 	
-	private void btnSairAction(ActionEvent e) {
-		dispose();
-	}
-	
-	public void btnLimparAction(ActionEvent e) {
+	public void limpar() {
 		textFieldPlaca.setText("");
+		textFieldCargaMax.setText("");
 		textFieldMarca.setText("");
 		textFieldModelo.setText("");
 		textFieldCor.setText("");
@@ -243,10 +241,14 @@ public class AdicionarCarga extends JFrame {
 		} 
 		catch (VeicExistException ve) {
 			Mensagem.excecao("Veículo já cadastrado no sistema.");
+		} 
+		catch (NumberFormatException ne) {
+			Mensagem.excecao("Campo(s) preenchido(s) incorretamente.");
 		}
 	}
 	
 	public void btnNovoAction(ActionEvent e) {
-		btnLimparAction(e);
+		limpar();
+		btnNovo.setEnabled(false);
 	}
 }
