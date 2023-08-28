@@ -35,25 +35,26 @@ public final class BDVeiculos {
 		this.listaCarga = listaCarga;
 	}
 	
-	public void addPasseio(Passeio veiculo) throws VeicExistException {
+	public static void addPasseio(Passeio veiculo) throws VeicExistException {
 		validaVeiculoCadastrado(veiculo);
-		BDVeiculosSingle.listaPasseio.add(veiculo);
+		BDVeiculosSingle.getListaPasseio().add(veiculo);
 	}
 	
-	public void addCarga(Carga veiculo) throws VeicExistException {
+	public static void addCarga(Carga veiculo) throws VeicExistException {
 		validaVeiculoCadastrado(veiculo);
-		BDVeiculosSingle.listaCarga.add(veiculo);
+		//checar se nullpointer
+		BDVeiculosSingle.getListaCarga().add(veiculo);
 	}
 	
 	public static void removeCarga(Carga veiculo) {
-		if (BDVeiculosSingle.listaCarga != null) {
-			BDVeiculosSingle.listaCarga.remove(veiculo);
+		if (BDVeiculosSingle.getListaCarga() != null) {
+			BDVeiculosSingle.getListaCarga().remove(veiculo);
 		}
 	}
 	
 	public static void removePasseio(Passeio veiculo) {
-		if(BDVeiculosSingle.listaPasseio != null) {
-			BDVeiculosSingle.listaPasseio.remove(veiculo);
+		if(BDVeiculosSingle.getListaPasseio() != null) {
+			BDVeiculosSingle.getListaPasseio().remove(veiculo);
 		}
 	}
 

@@ -7,7 +7,7 @@ import controller.VelocException;
 import model.BDVeiculos;
 import model.Carga;
 import model.Passeio;
-import view.FrameMenu;
+import view.Menu;
 
 public class Teste {
 
@@ -16,7 +16,7 @@ public class Teste {
     static String placa;
 
     public static void main(String[] args) throws VeicExistException {
-        FrameMenu menu = new FrameMenu();
+        Menu menu = new Menu();
         menu.setVisible(true);
         carros.addCarga(new Carga("BCD 234", "Ford", "Transit", "Branca", 190.00F, 4, 6, 127, 1000, 500));
         carros.addCarga(new Carga("CDT 246", "Ford", "Transit", "Preta", 210.00F, 4, 8, 152, 1150, 510));

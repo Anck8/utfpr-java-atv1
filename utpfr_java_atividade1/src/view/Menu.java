@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-public class FrameMenu extends JFrame {
+public class Menu extends JFrame {
 
 	private static final long serialVersionUID = -7703754494214959683L;
 	private JPanel contentPane = new JPanel();
@@ -29,7 +29,7 @@ public class FrameMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameMenu frame = new FrameMenu();
+					Menu frame = new Menu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,9 +42,8 @@ public class FrameMenu extends JFrame {
 	 * Create the frame.
 	 * @throws IOException 
 	 */
-	public FrameMenu(){
+	public Menu(){
 		setResizable(false);
-		setLocationRelativeTo(null);
 		setTitle("Gestão de Veículos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -86,6 +85,9 @@ public class FrameMenu extends JFrame {
 			}
 		});
 		
+		
+		setLocationRelativeTo(null);
+		
 	}
 
 	private void setImagePasseio(JPanel panelImagePasseio) {
@@ -95,18 +97,14 @@ public class FrameMenu extends JFrame {
 		panelImagePasseio.add(imagePasseioLabel);
 	}
 	
-	public boolean confirmaAcao(String mensagem) {
-		return JOptionPane.showConfirmDialog(null, mensagem, null, JOptionPane.YES_NO_OPTION) == 0;
-	}
-	
 	private void btnSairAction(ActionEvent e) {
-		if (confirmaAcao("Deseja sair do programa?")) {
+		if (Mensagem.confirmaAcao("Deseja sair do programa?")) {
 			dispose();
 		}
 	}
 	
 	private void btnAbreMenuCarga(ActionEvent e) {
-		MenuCarga.getMenuCargaSingle().setVisible(true);
+		ImprimirCarga.getMenuCargaSingle().setVisible(true);
 	}
 	
 	private void btnAbreMenuPasseio(ActionEvent e) {
