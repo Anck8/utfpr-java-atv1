@@ -58,19 +58,16 @@ public final class BDVeiculos {
 	}
 
 	public static void validaVeiculoCadastrado(Veiculo carro) throws VeicExistException {
-		if (carro instanceof Passeio && !BDVeiculosSingle.listaPasseio.isEmpty()) {
+		if (carro instanceof Passeio && !BDVeiculosSingle.getListaPasseio().isEmpty()) {
 			Veiculo carroCad = BDVeiculosSingle.listaPasseio.stream()
 					.filter(cp -> cp.getPlaca().equals(carro.getPlaca())).findAny().orElse(null);
 			if (carroCad != null) {
-				//substituir por preencher a tela de cadastro
-				Impressao.imprimeCarroPasseioPorPlaca(BDVeiculosSingle.listaPasseio, carro.getPlaca());
 				throw new VeicExistException();
 			}
-		} else if (!BDVeiculosSingle.listaCarga.isEmpty()) {
+		} else if (!BDVeiculosSingle.getListaCarga().isEmpty()) {
 			Veiculo carroCad = BDVeiculosSingle.listaCarga.stream().filter(cp -> cp.getPlaca().equals(carro.getPlaca()))
 					.findAny().orElse(null);
 			if (carroCad != null) {
-				Impressao.imprimeCarroCargaPorPlaca(BDVeiculosSingle.listaCarga, carro.getPlaca());
 				throw new VeicExistException();
 			}
 		}

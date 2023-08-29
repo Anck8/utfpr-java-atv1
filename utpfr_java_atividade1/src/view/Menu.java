@@ -97,13 +97,6 @@ public class Menu extends JFrame {
 		});
 		setLocationRelativeTo(null);
 	}
-
-	private void setImagePasseio(JPanel panelImagePasseio) {
-		panelImagePasseio.setLayout(new FlowLayout());
-		JLabel imagePasseioLabel = new JLabel();
-		imagePasseioLabel.setIcon(new ImageIcon("/home/andrek/Pictures/UTFPR/Passeio.webp"));
-		panelImagePasseio.add(imagePasseioLabel);
-	}
 	
 	private void btnSairAction(ActionEvent e) {
 		if (Mensagem.confirmaAcao("Deseja sair do programa?")) {
@@ -116,6 +109,6 @@ public class Menu extends JFrame {
 	}
 	
 	private void btnAbreMenuPasseio(ActionEvent e) {
-		MenuPasseio.getMenuPasseioSingle().setVisible(true);
+		ImprimirPasseio.getMenuPasseioSingle().setVisible(true);
 	}
 }

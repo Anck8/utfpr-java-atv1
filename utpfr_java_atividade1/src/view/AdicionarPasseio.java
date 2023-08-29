@@ -1,8 +1,11 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,13 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 import controller.VeicExistException;
 import model.BDVeiculos;
-import model.Carga;
+import model.Passeio;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class AdicionarCarga extends JFrame {
+public class AdicionarPasseio extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldPlaca;
@@ -29,27 +28,26 @@ public class AdicionarCarga extends JFrame {
 	private JTextField textFieldVelocMax;
 	private JTextField textFieldQtdPistoes;
 	private JTextField textFieldPotencia;
-	private JTextField textFieldTara;
-	private JTextField textFieldCargaMax;
+	private JTextField textFieldQtdPassageiros;
 	private JButton btnNovo;
 	
-	static AdicionarCarga adicionarCargaSingle;
+	static AdicionarPasseio adicionarPasseioSingle;
 	
-	public static AdicionarCarga getAdicionarCargaSingle() {
-		if (adicionarCargaSingle == null) {
-			adicionarCargaSingle = new AdicionarCarga();
+	public static AdicionarPasseio getAdicionarPasseioSingle() {
+		if (adicionarPasseioSingle == null) {
+			adicionarPasseioSingle = new AdicionarPasseio();
 		}
-		return adicionarCargaSingle;
+		return adicionarPasseioSingle;
 	}
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	private static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdicionarCarga frame = new AdicionarCarga();
+					AdicionarPasseio frame = new AdicionarPasseio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,9 +59,9 @@ public class AdicionarCarga extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	private AdicionarCarga() {
+	public AdicionarPasseio() {
 		setResizable(false);
-		setTitle("Gestão de Veículos - [Carga] Adicionar Veículo");
+		setTitle("Gestão de Veículos - [Passeio] Adicionar Veículo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 350);
 		contentPane = new JPanel();
@@ -73,92 +71,87 @@ public class AdicionarCarga extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblPlaca = new JLabel("Placa:");
-		lblPlaca.setBounds(12, 59, 110, 15);
+		lblPlaca.setBounds(12, 30, 110, 15);
 		contentPane.add(lblPlaca);
 		
 		JLabel lblMarca = new JLabel("Marca:");
-		lblMarca.setBounds(12, 87, 110, 15);
+		lblMarca.setBounds(12, 57, 110, 15);
 		contentPane.add(lblMarca);
 		
 		JLabel lblModelo = new JLabel("Modelo:");
-		lblModelo.setBounds(12, 115, 110, 15);
+		lblModelo.setBounds(12, 84, 110, 15);
 		contentPane.add(lblModelo);
 		
 		JLabel lblCor = new JLabel("Cor:");
-		lblCor.setBounds(12, 143, 110, 15);
+		lblCor.setBounds(12, 111, 110, 15);
 		contentPane.add(lblCor);
 		
 		JLabel lblQtdRodas = new JLabel("Qtd. Rodas:");
-		lblQtdRodas.setBounds(12, 171, 110, 15);
+		lblQtdRodas.setBounds(12, 138, 110, 15);
 		contentPane.add(lblQtdRodas);
 		
 		JLabel lblVelMax = new JLabel("Velocidade Máx.:");
-		lblVelMax.setBounds(12, 198, 110, 15);
+		lblVelMax.setBounds(12, 165, 110, 15);
 		contentPane.add(lblVelMax);
 		
 		JLabel lblQtdPistes = new JLabel("Qtd. Pistões:");
-		lblQtdPistes.setBounds(12, 226, 110, 15);
+		lblQtdPistes.setBounds(12, 191, 110, 15);
 		contentPane.add(lblQtdPistes);
 		
 		JLabel lblPotncia = new JLabel("Potência:");
-		lblPotncia.setBounds(12, 254, 110, 15);
+		lblPotncia.setBounds(12, 218, 110, 15);
 		contentPane.add(lblPotncia);
 		
-		JLabel lblTara = new JLabel("Tara:");
-		lblTara.setBounds(12, 3, 110, 15);
-		contentPane.add(lblTara);
+		JLabel lblQtdPassageiros = new JLabel("Qtd. Passageiros:");
+		lblQtdPassageiros.setBounds(12, 3, 110, 15);
+		contentPane.add(lblQtdPassageiros);
 		
 		textFieldPlaca = new JTextField();
 		textFieldPlaca.setToolTipText("");
-		textFieldPlaca.setBounds(140, 57, 298, 18);
+		textFieldPlaca.setBounds(140, 28, 298, 18);
 		contentPane.add(textFieldPlaca);
 		textFieldPlaca.setColumns(10);
 		
 		textFieldMarca = new JTextField();
-		textFieldMarca.setBounds(140, 85, 298, 18);
+		textFieldMarca.setBounds(140, 55, 298, 18);
 		contentPane.add(textFieldMarca);
 		textFieldMarca.setColumns(10);
 		
 		textFieldModelo = new JTextField();
-		textFieldModelo.setBounds(140, 113, 298, 18);
+		textFieldModelo.setBounds(140, 82, 298, 18);
 		contentPane.add(textFieldModelo);
 		textFieldModelo.setColumns(10);
 		
 		textFieldCor = new JTextField();
-		textFieldCor.setBounds(140, 141, 298, 18);
+		textFieldCor.setBounds(140, 109, 298, 18);
 		contentPane.add(textFieldCor);
 		textFieldCor.setColumns(10);
 		
 		comboBoxQtdRodas = new JComboBox();
 		comboBoxQtdRodas.setModel(new DefaultComboBoxModel(new String[] {"2", "3", "4", "6", "8", "12"}));
 		comboBoxQtdRodas.setSelectedIndex(2);
-		comboBoxQtdRodas.setBounds(140, 171, 298, 15);
+		comboBoxQtdRodas.setBounds(140, 138, 298, 15);
 		contentPane.add(comboBoxQtdRodas);
 		
 		textFieldVelocMax = new JTextField();
-		textFieldVelocMax.setBounds(140, 196, 298, 18);
+		textFieldVelocMax.setBounds(140, 163, 298, 18);
 		contentPane.add(textFieldVelocMax);
 		textFieldVelocMax.setColumns(10);
 		
 		textFieldQtdPistoes = new JTextField();
-		textFieldQtdPistoes.setBounds(140, 224, 298, 18);
+		textFieldQtdPistoes.setBounds(140, 189, 298, 18);
 		contentPane.add(textFieldQtdPistoes);
 		textFieldQtdPistoes.setColumns(10);
 		
 		textFieldPotencia = new JTextField();
-		textFieldPotencia.setBounds(140, 252, 298, 18);
+		textFieldPotencia.setBounds(140, 216, 298, 18);
 		contentPane.add(textFieldPotencia);
 		textFieldPotencia.setColumns(10);
 		
-		textFieldTara = new JTextField();
-		textFieldTara.setBounds(140, 1, 298, 18);
-		contentPane.add(textFieldTara);
-		textFieldTara.setColumns(10);
-		
-		textFieldCargaMax = new JTextField();
-		textFieldCargaMax.setBounds(140, 28, 298, 21);
-		contentPane.add(textFieldCargaMax);
-		textFieldCargaMax.setColumns(10);
+		textFieldQtdPassageiros = new JTextField();
+		textFieldQtdPassageiros.setBounds(140, 1, 298, 18);
+		contentPane.add(textFieldQtdPassageiros);
+		textFieldQtdPassageiros.setColumns(10);
 		
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
@@ -201,16 +194,11 @@ public class AdicionarCarga extends JFrame {
 		btnNovo.setBounds(246, 282, 90, 27);
 		contentPane.add(btnNovo);
 		
-		JLabel lblCargaMx = new JLabel("Carga Máx:");
-		lblCargaMx.setBounds(12, 30, 110, 17);
-		contentPane.add(lblCargaMx);
-		
 		setLocationRelativeTo(null);
 	}
 	
 	public void limpar() {
 		textFieldPlaca.setText("");
-		textFieldCargaMax.setText("");
 		textFieldMarca.setText("");
 		textFieldModelo.setText("");
 		textFieldCor.setText("");
@@ -218,13 +206,13 @@ public class AdicionarCarga extends JFrame {
 		textFieldVelocMax.setText("");
 		textFieldQtdPistoes.setText("");
 		textFieldPotencia.setText("");
-		textFieldTara.setText("");
+		textFieldQtdPassageiros.setText("");
 		btnNovo.setEnabled(false);
 	}
 	
 	public void btnCadastrarAction(ActionEvent e) throws VeicExistException{
 		try {
-			Carga carga = new Carga(
+			Passeio passeio = new Passeio(
 					textFieldPlaca.getText(), 
 					textFieldMarca.getText(), 
 					textFieldModelo.getText(),
@@ -233,10 +221,9 @@ public class AdicionarCarga extends JFrame {
 					Integer.parseInt(comboBoxQtdRodas.getSelectedItem().toString()),
 					Integer.parseInt(textFieldQtdPistoes.getText()),
 					Integer.parseInt(textFieldPotencia.getText()),
-					Integer.parseInt(textFieldCargaMax.getText()),
-					Integer.parseInt(textFieldTara.getText())
+					Integer.parseInt(textFieldQtdPassageiros.getText())
 					);
-			BDVeiculos.addCarga(carga);
+			BDVeiculos.addPasseio(passeio);
 			Mensagem.sucesso("Veículo cadastrado com sucesso!");
 			btnNovo.setEnabled(true);
 		} 
@@ -252,4 +239,5 @@ public class AdicionarCarga extends JFrame {
 		limpar();
 		btnNovo.setEnabled(false);
 	}
+
 }
